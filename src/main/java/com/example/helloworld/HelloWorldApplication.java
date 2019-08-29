@@ -3,7 +3,9 @@ package com.example.helloworld;
 import com.example.helloworld.DAO.InfoDao;
 import com.example.helloworld.api.EmployeeController;
 import com.example.helloworld.api.MyResource;
+import com.example.helloworld.model.Employee;
 import com.example.helloworld.model.Info;
+
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -19,12 +21,15 @@ import jersey.repackaged.com.google.common.collect.ImmutableMultimap;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.EntityManager;
 import java.io.PrintWriter;
 
 public class HelloWorldApplication extends Application<HelloWorldConfiguration> {
     public static void main(String[] args) throws Exception {
         new HelloWorldApplication().run(args);
     }
+
+
 
     private HibernateBundle<HelloWorldConfiguration> hibernateBundle = new HibernateBundle<HelloWorldConfiguration>(Info.class) {
         @Override
@@ -69,6 +74,8 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
         InfoDao infoDao = new InfoDao(hibernateBundle.getSessionFactory());
         final MyResource resource1 = new MyResource(infoDao);
         environment.jersey().register(resource1);
+
+
     }
 
 
